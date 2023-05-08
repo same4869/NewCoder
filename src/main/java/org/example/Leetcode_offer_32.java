@@ -31,21 +31,53 @@ public class Leetcode_offer_32 {
         System.out.println(levelOrder(setupTree()));
     }
 
+    //广度遍历,不太符合预期
     public static List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> ret = new ArrayList<>();
         Queue<TreeNode> queue = new ArrayDeque<>();
 
-        if(root != null)queue.add(root);
+        if (root != null) queue.add(root);
+        int level = 1;
         while (!queue.isEmpty()) {
             List<Integer> temp = new ArrayList<>();
             for (int i = queue.size(); i > 0; i--) {
                 TreeNode node = queue.poll();
                 temp.add(node.val);
-                if(node.left!=null) queue.add(node.left);
-                if(node.right!=null) queue.add(node.right);
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
+            }
+            if (level % 2 == 0) {
+                List<Integer> temp2 = new ArrayList<>();
+                for (int j = temp.size() - 1; j >= 0; j--) {
+                    temp2.add(temp.get(j));
+                }
+                temp = temp2;
+            }
+            ret.add(temp);
+            level++;
+        }
+
+        return ret;
+    }
+
+
+    //深度遍历
+    public static List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> ret = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+
+        if (root != null) stack.push(root);
+        while (!stack.isEmpty()) {
+            List<Integer> temp = new ArrayList<>();
+            for (int i = stack.size(); i > 0; i--) {
+                TreeNode node = stack.pop();
+                temp.add(node.val);
+                if (node.left != null) stack.push(node.left);
+                if (node.right != null) stack.push(node.right);
             }
             ret.add(temp);
         }
+
 
         return ret;
     }
