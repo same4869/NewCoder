@@ -35,21 +35,24 @@ public class LeetCodeMergeTwoLists {
         ListNode pA = l1;
         ListNode pB = l2;
         ListNode ret;
+        ListNode retHead;
 
         if (l1.val < l2.val) {
-            ret = pA;
+            ret = new ListNode(pA.val);
             pA = pA.next;
         } else {
-            ret = pB;
+            ret = new ListNode(pB.val);
             pB = pB.next;
         }
 
+        retHead = ret;
+
         while (pA != null && pB != null) {
             if (pA.val < pB.val) {
-                ret.next = pA;
+                ret.next = new ListNode(pA.val);
                 pA = pA.next;
             } else {
-                ret.next = pB;
+                ret.next = new ListNode(pB.val);
                 pB = pB.next;
             }
             ret = ret.next;
@@ -62,12 +65,12 @@ public class LeetCodeMergeTwoLists {
             ret.next = pB;
         }
 
-        return ret;
+        return retHead;
     }
 
     public static void main(String[] args) {
         ListNode ret = mergeTwoLists(setupNodeA(), setupNodeB());
-        while (ret.next != null) {
+        while (ret != null) {
             System.out.println(ret.val + " ");
             ret = ret.next;
         }
